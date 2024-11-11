@@ -32,11 +32,13 @@
 
             // Esegui la richiesta GET con fetch
             fetch(url, {
-                method: 'GET',
-                headers: {
-                    'ngrok-skip-browser-warning': 'ValorePersonalizzato' // Aggiungi il tuo header personalizzato
-                }
-            })
+    method: 'POST',
+    body: queryParams,
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded', 
+        'ngrok-skip-browser-warning' : 'viva il duce'
+    }
+})
             .then(response => {
                 if (response.ok) {
                     return response.json();
